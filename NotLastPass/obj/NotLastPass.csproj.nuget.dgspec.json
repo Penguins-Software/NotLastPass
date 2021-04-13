@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Brian Dearing\\source\\repos\\NotLastPass\\NotLastPass\\NotLastPass.csproj": {}
+    "D:\\Documents\\GitHub\\NotLastPass\\NotLastPass\\NotLastPass.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Brian Dearing\\source\\repos\\NotLastPass\\NotLastPass\\NotLastPass.csproj": {
+    "D:\\Documents\\GitHub\\NotLastPass\\NotLastPass\\NotLastPass.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Brian Dearing\\source\\repos\\NotLastPass\\NotLastPass\\NotLastPass.csproj",
+        "projectUniqueName": "D:\\Documents\\GitHub\\NotLastPass\\NotLastPass\\NotLastPass.csproj",
         "projectName": "NotLastPass",
-        "projectPath": "C:\\Users\\Brian Dearing\\source\\repos\\NotLastPass\\NotLastPass\\NotLastPass.csproj",
+        "projectPath": "D:\\Documents\\GitHub\\NotLastPass\\NotLastPass\\NotLastPass.csproj",
         "packagesPath": "C:\\Users\\Brian Dearing\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Brian Dearing\\source\\repos\\NotLastPass\\NotLastPass\\obj\\",
+        "outputPath": "D:\\Documents\\GitHub\\NotLastPass\\NotLastPass\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -69,6 +69,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.2, )"
+            },
+            "bootstrap": {
+              "target": "Package",
+              "version": "[4.6.0, )"
             }
           },
           "imports": [

@@ -6,10 +6,26 @@
 }
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="text-center">
-        <h1 class="display-4">Welcome @User.Identity.Name</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center">
+    <h1 class="display-4">Welcome @User.Identity.Name</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <input id="Submit1" type="submit" value="Add Password" onclick="return Submit1_onclick()" />
+            </div>
+            <div class="col-md">
+                One of two columns
+            </div>
+        </div>
     </div>
+
+
+</div>
 }
 else
 {

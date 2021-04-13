@@ -97,6 +97,7 @@ namespace NotLastPass.Areas.Identity.Pages.Account
                     
                     using (var client = new HttpClient())
                     {
+                        //Uri for backend
                         client.BaseAddress = new Uri("http://localhost:5000/");
                         client.DefaultRequestHeaders.Accept.Clear();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -106,25 +107,26 @@ namespace NotLastPass.Areas.Identity.Pages.Account
 
                         if (response.IsSuccessStatusCode)
                         {
-                            // Get the URI of the created resource.  
-                            Console.WriteLine("It worked");
+                            // Get the URI of the created resource.
+                            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                            {
+                                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                            }
+                            else
+                            {
+                                await _signInManager.SignInAsync(user, isPersistent: false);
+                                return LocalRedirect(returnUrl);
+                            }
+
                         }
 
                     }
 
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    
                 }
                 foreach (var error in result.Errors)
                 {
