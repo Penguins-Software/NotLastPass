@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using NotLastPass.Controllers;
 
 namespace NotLastPass.Areas.Identity.Pages.Account
 {
@@ -26,18 +27,24 @@ namespace NotLastPass.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        static HttpClient client = new HttpClient();
+
+        readonly MongoController _mongoController;
+        private readonly ILogger<MongoController> _mongoLogger;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
+            ILogger<MongoController> mongoLogger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            
+            _mongoLogger = mongoLogger;
+            _mongoController = new MongoController(_mongoLogger);
         }
 
         [BindProperty]
@@ -92,41 +99,21 @@ namespace NotLastPass.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    //var user_json = "\"id\": "+user.Id+"";
-                    var user_json = new { id = user.Id };
-                    
-                    using (var client = new HttpClient())
-                    {
-                        //Uri for backend
-                        client.BaseAddress = new Uri("http://localhost:5000/");
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    //Mongo Controller, used to create new database for that user.
+                    _mongoController.Create(user.Id);
 
-                        //POST Method  
-                        HttpResponseMessage response = await client.PostAsJsonAsync("NewUser", user_json);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            // Get the URI of the created resource.
-                            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                            if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                            {
-                                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                            }
-                            else
-                            {
-                                await _signInManager.SignInAsync(user, isPersistent: false);
-                                return LocalRedirect(returnUrl);
-                            }
-
-                        }
-
-                    }
-
-
-                    
+                    // Get the URI of the created resource.
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                     {
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                     }
+                     else
+                      {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                      }
                 }
                 foreach (var error in result.Errors)
                 {

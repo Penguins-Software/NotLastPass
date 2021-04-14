@@ -330,3 +330,15 @@ D:\Documents\GitHub\NotLastPass\NotLastPass\obj\Debug\net5.0\NotLastPass.dll
 D:\Documents\GitHub\NotLastPass\NotLastPass\obj\Debug\net5.0\ref\NotLastPass.dll
 D:\Documents\GitHub\NotLastPass\NotLastPass\obj\Debug\net5.0\NotLastPass.pdb
 D:\Documents\GitHub\NotLastPass\NotLastPass\obj\Debug\net5.0\NotLastPass.genruntimeconfig.cache
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\DnsClient.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\MongoDB.Bson.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\MongoDB.Driver.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\MongoDB.Driver.Core.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\MongoDB.Libmongocrypt.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\SharpCompress.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\runtimes\win\native\libzstd.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\runtimes\win\native\snappy32.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\runtimes\win\native\snappy64.dll
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
+D:\Documents\GitHub\NotLastPass\NotLastPass\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
