@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace NotLastPass.Controllers
 {
@@ -16,37 +20,26 @@ namespace NotLastPass.Controllers
     {
 
         private readonly ILogger<MongoController> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
+
+
         MongoClient dbClient;
-
-
-        public MongoController(ILogger<MongoController> logger)
+        public MongoController(UserManager<IdentityUser> userManager, ILogger<MongoController> logger)
         {
             _logger = logger;
+            _userManager = userManager;
 
+            //TODO: Put connectionString in appsettings.json
             dbClient = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
-
-            //var dbList = dbClient.ListDatabases().ToList();
-
-            /*Console.WriteLine("The list of databases on this server is: ");
-            foreach (var db in dbList)
-            {
-                Console.WriteLine(db);
-            }*/
-        }
-
-        // GET: MongoController
-        public ActionResult Index()
-        {
-            return View();
         }
 
         // GET: MongoController/Details/5
-        public JsonResult Details(string id)
+        public string Details(string id)
         {
             var usersDB = dbClient.GetDatabase(id);
-            var passwords = usersDB.GetCollection<BsonDocument>("PasswordCollection");
+            var passwords = usersDB.GetCollection<BsonDocument>("PasswordCollection").Find(doc=>doc==doc).ToList();
 
-            return Json(passwords);
+            return BsonExtensionMethods.ToJson(passwords);
         }
 
         // GET: MongoController/Create
@@ -55,9 +48,7 @@ namespace NotLastPass.Controllers
             return View();
         }*/
 
-        // POST: MongoController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // Used to create new Database for new users.
         public bool Create(string newUserId)
         {
             try
@@ -79,12 +70,18 @@ namespace NotLastPass.Controllers
         }
 
         // POST: MongoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, string passDoc)
         {
             try
             {
+                if (User?.Identity.IsAuthenticated == true)
+                {
+                    var usersDB = dbClient.GetDatabase(_userManager.GetUserId(this.User));
+
+                    var passColl = usersDB.GetCollection<Document>("PasswordCollection");
+
+                    passColl.UpdateOne(doc => doc._id == id, passDoc);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -100,8 +97,6 @@ namespace NotLastPass.Controllers
         }
 
         // POST: MongoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
@@ -113,5 +108,22 @@ namespace NotLastPass.Controllers
                 return View();
             }
         }
+
+
+        public class Document
+        {
+            /// <summary>Gets or sets the _id.</summary>
+            public int _id { get; set; }
+
+            /// <summary>Gets or sets the website.</summary>
+            public string website { get; set; }
+
+            /// <summary>Gets or sets username.</summary>
+            public string username { get; set; }
+
+            /// <summary>Gets or sets password.</summary>
+            public string password { get; set; }
+        }
+
     }
 }

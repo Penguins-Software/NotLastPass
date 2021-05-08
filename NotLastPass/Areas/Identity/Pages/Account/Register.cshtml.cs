@@ -44,7 +44,7 @@ namespace NotLastPass.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             
             _mongoLogger = mongoLogger;
-            _mongoController = new MongoController(_mongoLogger);
+            _mongoController = new MongoController(_userManager, _mongoLogger);
         }
 
         [BindProperty]
