@@ -1,3 +1,7 @@
+require('dotenv').config();
+
+console.log("Connecting to: " + process.env.DB_URL);
+
 module.exports = {
-    url: "mongodb://localhost:27017/NotLastPass"
+    url: process.env.DB_URL
   };
