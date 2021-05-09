@@ -24,3 +24,23 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+frontend/build/asset-manifest.json
+frontend/build/favicon.ico
+frontend/build/index.html
+frontend/build/logo192.png
+frontend/build/logo512.png
+frontend/build/manifest.json
+frontend/build/robots.txt
+frontend/build/static/css/2.800be05e.chunk.css
+frontend/build/static/css/2.800be05e.chunk.css.map
+frontend/build/static/css/main.f3848b71.chunk.css
+frontend/build/static/css/main.f3848b71.chunk.css.map
+frontend/build/static/js/2.bb0c75f3.chunk.js
+frontend/build/static/js/2.bb0c75f3.chunk.js.LICENSE.txt
+frontend/build/static/js/2.bb0c75f3.chunk.js.map
+frontend/build/static/js/3.cf2300f3.chunk.js
+frontend/build/static/js/3.cf2300f3.chunk.js.map
+frontend/build/static/js/main.56a74ce5.chunk.js
+frontend/build/static/js/main.56a74ce5.chunk.js.map
+frontend/build/static/js/runtime-main.24f6bc95.js
+frontend/build/static/js/runtime-main.24f6bc95.js.map
