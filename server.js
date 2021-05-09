@@ -30,15 +30,10 @@ db.mongoose
     process.exit();
   });
 
-//db.sequelize.sync();
-
-
-const path = __dirname + '/app/views/';
-  
+//Looks in 
+const path = __dirname + '/frontend/build/';
 app.use(express.static(path));
-
 require("./app/routes/password.routes")(app);
-
 
 app.get('/', function (req,res) {
   res.sendFile(path + "index.html");
