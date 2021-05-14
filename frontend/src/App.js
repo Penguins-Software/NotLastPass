@@ -6,6 +6,7 @@ import "./App.css";
 import AddPassword from "./components/add-password.component";
 import Password from "./components/password.component";
 import PasswordsList from "./components/passwords-list.component";
+import UploadPassword from "./components/upload-password.component";
 
 class App extends Component {
   render() {
@@ -26,6 +27,11 @@ class App extends Component {
                 Add
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/upload"} className="nav-link">
+                Upload
+              </Link>
+            </li>
           </div>
         </nav>
 
@@ -33,6 +39,7 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/passwords"]} component={PasswordsList} />
             <Route exact path="/add" component={AddPassword} />
+            <Route exact path="/upload" component={UploadPassword} />
             <Route path="/passwords/:id" component={Password} />
           </Switch>
         </div>

@@ -17,29 +17,18 @@ exports.create = (req, res) => {
     password: req.body.password
   });
 
-  console.log("pass object: "+password)
   // Save Password in the database
   password
     .save(function (err, newPost) {
-      console.log("Here in save");
       if (err) {
-        console.log("Here in err");
-        console.log("error: " + err.message);
         res.status(500).json({
           message : err.message
         });
       } else {
         //Save ok
-        console.log("Here in ok");
         res.status(201).send(newPost);
       }
     })
-    // .catch(err => {
-    //   res.status(500).send({
-    //     message:
-    //       err.message || "Some error occurred while creating the password."
-    //   });
-    // });
 };
 
 // Retrieve all Passwords from the database.
