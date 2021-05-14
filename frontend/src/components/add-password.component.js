@@ -114,8 +114,8 @@ export default class AddPassword extends Component {
             </div>
 
             <button onClick={this.savePassword} className="btn btn-success">
-              Submit
-            </button>
+                Submit
+              </button>
           </div>
         )}
       </div>

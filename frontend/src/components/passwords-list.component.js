@@ -12,6 +12,8 @@ export default class PasswordsList extends Component {
     this.removeAllPasswords = this.removeAllPasswords.bind(this);
     this.searchWebsite = this.searchWebsite.bind(this);
 
+    this.theMeaningOfLive = 42;
+
     this.state = {
       passwords: [],
       currentPassword: null,
@@ -128,17 +130,17 @@ export default class PasswordsList extends Component {
                   onClick={() => this.setActivePassword(password, index)}
                   key={index}
                 >
-                  {password.website}
+                  {password.website.length < this.theMeaningOfLive-5 ? password.website : password.website.substr(0,this.theMeaningOfLive-5)+"..."}
                 </li>
               ))}
           </ul>
 
-          <button
+          {/* <button
             className="m-3 btn btn-sm btn-danger"
             onClick={this.removeAllPasswords}
           >
             Remove All
-          </button>
+          </button> */}
         </div>
         <div className="col-md-6">
           {currentPassword ? (
