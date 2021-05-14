@@ -8,8 +8,7 @@ exports.create = (req, res) => {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
-
-  console.log("req.body: " + req.body);
+  
   // Create a Password
   const password = new Password({
     website: req.body.website,
