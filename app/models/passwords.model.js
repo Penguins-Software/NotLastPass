@@ -1,5 +1,5 @@
 module.exports = mongoose => {
-    const Password = new mongoose.model(
+    return new mongoose.model(
       "password",
       mongoose.Schema({
         website: {
@@ -17,7 +17,4 @@ module.exports = mongoose => {
       }
       )
     );
-    
-  
-    return Password;
   };

@@ -34,6 +34,7 @@ db.mongoose
 const path = __dirname + '/frontend/build/';
 app.use(express.static(path));
 require("./app/routes/password.routes")(app);
+require("./app/routes/auth.routes")(app);
 
 app.get('/', function (req,res) {
   res.sendFile(path + "index.html");
