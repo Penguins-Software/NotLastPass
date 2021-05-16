@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
+import AuthService from "../services/auth.service";
 
 export default class AddPassword extends Component {
   constructor(props) {
@@ -39,10 +40,16 @@ export default class AddPassword extends Component {
   }
 
   savePassword() {
+
+    const user = AuthService.getCurrentUser();
+    console.log(JSON.stringify(user));
+    console.log(user.accessToken);
+    
     var data = {
       website: this.state.website,
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      currentUser: user.username
     };
 
     PasswordDataService.create(JSON.stringify(data)).catch(e => {

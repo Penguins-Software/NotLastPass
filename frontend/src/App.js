@@ -50,6 +50,7 @@ class App extends Component {
           <a href="/passwords" className="navbar-brand">
             Penguins
           </a>
+          {currentUser ? (
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link to={"/passwords"} className="nav-link">
@@ -67,8 +68,8 @@ class App extends Component {
               </Link>
             </li>
           </div>
-
-          {currentUser ? (
+          ):(null)}
+        {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">

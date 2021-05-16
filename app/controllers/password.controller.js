@@ -1,33 +1,46 @@
 const db = require("../models");
+const mongoose = require("mongoose");
 const Password = db.passwords;
 
 // Create and Save a new Password
 exports.create = (req, res) => {
+  console.log("password controller create");
   // Validate request
   if (!req.body.website) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
-  
-  // Create a Password
-  const password = new Password({
+
+  const passSchema = mongoose.Schema({
+    website: {
+      type: String,
+      require: true
+    },
+    username: {
+      type: String,
+      require: true
+    },
+    password: {
+      type: String,
+      require: true
+    }
+  });
+  const loginUser = req.body.currentUser;
+  const Model = mongoose.model(loginUser, passSchema);
+
+  // Save Password in the database
+  Model.create({
     website: req.body.website,
     username: req.body.username,
     password: req.body.password
+  }).then(()=>{
+    res.status(201);
+  })
+  .catch(err => {
+    res.status(500).send({ message: err.message });
   });
 
-  // Save Password in the database
-  password
-    .save(function (err, newPost) {
-      if (err) {
-        res.status(500).json({
-          message : err.message
-        });
-      } else {
-        //Save ok
-        res.status(201).send(newPost);
-      }
-    })
+  
 };
 
 // Retrieve all Passwords from the database.
