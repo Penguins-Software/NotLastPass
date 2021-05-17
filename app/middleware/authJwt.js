@@ -13,7 +13,6 @@ verifyToken = (req, res, next) => {
     }
   
     jwt.verify(token, config.secret, (err, decoded) => {
-      console.log(token);
       if (err) {
         console.log("error in verify");
         return res.status(401).send({

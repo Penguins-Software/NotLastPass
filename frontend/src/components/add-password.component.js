@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
-import AuthService from "../services/auth.service";
 
 export default class AddPassword extends Component {
   constructor(props) {

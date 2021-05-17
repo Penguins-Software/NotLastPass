@@ -114,6 +114,8 @@ exports.update = (req, res) => {
 // Delete a Password with the specified id in the request
 exports.delete = (req, res) => {
 
+  const id = req.params.id;
+
   const loginUser = req.headers["username"];
   const Model = mongoose.model(loginUser, passSchema);
 

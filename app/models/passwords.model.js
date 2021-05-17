@@ -14,7 +14,6 @@ module.exports = mongoose => {
           type: String,
           require: true
         }
-      }
-      )
+      }, { _id: true })
     );
   };

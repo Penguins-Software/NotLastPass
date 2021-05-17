@@ -55,6 +55,7 @@ export default class PasswordsList extends Component {
   }
 
   setActivePassword(password, index) {
+    console.log(JSON.stringify(password));
     this.setState({
       currentPassword: password,
       currentIndex: index
@@ -165,7 +166,7 @@ export default class PasswordsList extends Component {
               </div>
 
               <Link
-                to={"/passwords/" + currentPassword.id}
+                to={"/passwords/" + currentPassword._id}
                 className="badge badge-warning"
               >
                 Edit

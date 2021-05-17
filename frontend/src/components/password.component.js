@@ -79,7 +79,7 @@ export default class Password extends Component {
 
   updatePassword() {
     PasswordDataService.update(
-      this.state.currentPassword.id,
+      this.state.currentPassword._id,
       this.state.currentPassword
     )
       .then(response => {
@@ -93,8 +93,8 @@ export default class Password extends Component {
       });
   }
 
-  deletePassword() {    
-    PasswordDataService.delete(this.state.currentPassword.id)
+  deletePassword() {
+    PasswordDataService.delete(this.state.currentPassword._id)
       .then(response => {
         console.log(response.data);
         this.props.history.push('/passwords')
