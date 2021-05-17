@@ -8,7 +8,6 @@ var bcrypt = require("bcryptjs");
 // Register new user
 exports.register = (req, res) => {
     // Save User to Database
-    console.log("Register in auth controller");
     User.create({
       username: req.body.username,
       email: req.body.email,
@@ -23,7 +22,6 @@ exports.register = (req, res) => {
 
 //Login user
 exports.login = (req, res) => {
-  console.log("Login in auth controller");
   User.findOne({
       username: req.body.username
   })

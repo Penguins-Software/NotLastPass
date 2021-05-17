@@ -40,22 +40,19 @@ export default class AddPassword extends Component {
   }
 
   savePassword() {
-
-    const user = AuthService.getCurrentUser();
-    console.log(JSON.stringify(user));
-    console.log(user.accessToken);
-    
     var data = {
       website: this.state.website,
       username: this.state.username,
-      password: this.state.password,
-      currentUser: user.username
+      password: this.state.password
     };
 
-    PasswordDataService.create(JSON.stringify(data)).catch(e => {
+    PasswordDataService.create(JSON.stringify(data)).then(
+      this.setState({
+        submitted: true
+      })).catch(e => {
       console.log(e);
     });
-      
+    
   }
 
   newPassword() {

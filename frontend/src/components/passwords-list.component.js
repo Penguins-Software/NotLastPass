@@ -40,7 +40,6 @@ export default class PasswordsList extends Component {
         this.setState({
           passwords: response.data
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
