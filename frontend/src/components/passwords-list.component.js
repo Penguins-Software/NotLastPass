@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
 import { Link } from "react-router-dom";
 
+import AuthService from "../services/auth.service";
+
 export default class PasswordsList extends Component {
   constructor(props) {
     super(props);
@@ -37,10 +39,14 @@ export default class PasswordsList extends Component {
   retrievePasswords() {
     PasswordDataService.getAll()
       .then(response => {
-        this.setState({
-          passwords: response.data
-        });
-        console.log(response.data);
+        if(response.data.message == "Unauthorized!"){
+          AuthService.logout();
+        }
+        else{
+          this.setState({
+            passwords: response.data
+          });
+        }
       })
       .catch(e => {
         console.log(e);
@@ -56,6 +62,7 @@ export default class PasswordsList extends Component {
   }
 
   setActivePassword(password, index) {
+    console.log(JSON.stringify(password));
     this.setState({
       currentPassword: password,
       currentIndex: index
@@ -65,8 +72,11 @@ export default class PasswordsList extends Component {
   removeAllPasswords() {
     PasswordDataService.deleteAll()
       .then(response => {
-        console.log(response.data);
-        this.refreshList();
+        if(response.data.message == "Unauthorized!"){
+          AuthService.logout();
+        }else{
+          this.refreshList();
+        }
       })
       .catch(e => {
         console.log(e);
@@ -81,10 +91,14 @@ export default class PasswordsList extends Component {
 
     PasswordDataService.findByWebsite(this.state.searchWebsite)
       .then(response => {
-        this.setState({
-          passwords: response.data
-        });
-        console.log(response.data);
+        if(response.data.message == "Unauthorized!"){
+          AuthService.logout();
+        }
+        else{
+          this.setState({
+            passwords: response.data
+          });
+        }
       })
       .catch(e => {
         console.log(e);
@@ -166,7 +180,7 @@ export default class PasswordsList extends Component {
               </div>
 
               <Link
-                to={"/passwords/" + currentPassword.id}
+                to={"/passwords/" + currentPassword._id}
                 className="badge badge-warning"
               >
                 Edit

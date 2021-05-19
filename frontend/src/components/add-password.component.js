@@ -45,10 +45,13 @@ export default class AddPassword extends Component {
       password: this.state.password
     };
 
-    PasswordDataService.create(JSON.stringify(data)).catch(e => {
+    PasswordDataService.create(JSON.stringify(data)).then(
+      this.setState({
+        submitted: true
+      })).catch(e => {
       console.log(e);
     });
-      
+    
   }
 
   newPassword() {

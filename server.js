@@ -20,7 +20,8 @@ const db = require("./app/models");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false 
   })
   .then(() => {
     console.log("Connected to the database!");
@@ -34,6 +35,7 @@ db.mongoose
 const path = __dirname + '/frontend/build/';
 app.use(express.static(path));
 require("./app/routes/password.routes")(app);
+require("./app/routes/auth.routes")(app);
 
 app.get('/', function (req,res) {
   res.sendFile(path + "index.html");

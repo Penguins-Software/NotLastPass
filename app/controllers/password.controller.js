@@ -1,5 +1,21 @@
 const db = require("../models");
+const mongoose = require("mongoose");
 const Password = db.passwords;
+
+const passSchema = mongoose.Schema({
+  website: {
+    type: String,
+    require: true
+  },
+  username: {
+    type: String,
+    require: true
+  },
+  password: {
+    type: String,
+    require: true
+  }
+});
 
 // Create and Save a new Password
 exports.create = (req, res) => {
@@ -9,33 +25,33 @@ exports.create = (req, res) => {
     return;
   }
   
-  // Create a Password
-  const password = new Password({
+  const loginUser = req.headers["username"];
+  const Model = mongoose.model(loginUser, passSchema);
+
+  // Save Password in the database
+  Model.create({
     website: req.body.website,
     username: req.body.username,
     password: req.body.password
+  }).then(()=>{
+    res.status(201).send({ message: "Success" });
+  })
+  .catch(err => {
+    res.status(500).send({ message: err.message });
   });
 
-  // Save Password in the database
-  password
-    .save(function (err, newPost) {
-      if (err) {
-        res.status(500).json({
-          message : err.message
-        });
-      } else {
-        //Save ok
-        res.status(201).send(newPost);
-      }
-    })
+  
 };
 
 // Retrieve all Passwords from the database.
 exports.findAll = (req, res) => {
     const website = req.query.website;
     var condition = website ? { website: { $regex: new RegExp(website), $options: "i" } } : {};
+
+    const loginUser = req.headers["username"];
+    const Model = mongoose.model(loginUser, passSchema);
   
-    Password.find(condition)
+    Model.find(condition)
       .then(data => {
         res.send(data);
       })
@@ -51,7 +67,10 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Password.findById(id)
+    const loginUser = req.headers["username"];
+    const Model = mongoose.model(loginUser, passSchema);
+
+    Model.findById(id)
       .then(data => {
         if (!data)
           res.status(404).send({ message: "Not found Password with id " + id });
@@ -73,8 +92,11 @@ exports.update = (req, res) => {
       }
     
       const id = req.params.id;
+
+      const loginUser = req.headers["username"];
+      const Model = mongoose.model(loginUser, passSchema);
     
-      Password.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+      Model.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
           if (!data) {
             res.status(404).send({
@@ -91,7 +113,13 @@ exports.update = (req, res) => {
 
 // Delete a Password with the specified id in the request
 exports.delete = (req, res) => {
-    Password.findByIdAndRemove(id)
+
+  const id = req.params.id;
+
+  const loginUser = req.headers["username"];
+  const Model = mongoose.model(loginUser, passSchema);
+
+  Model.findByIdAndRemove(id)
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -112,7 +140,11 @@ exports.delete = (req, res) => {
 
 // Delete all Passwords from the database.
 exports.deleteAll = (req, res) => {
-    Password.deleteMany({})
+
+  const loginUser = req.headers["username"];
+  const Model = mongoose.model(loginUser, passSchema);
+
+  Model.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Passwords were deleted successfully!`

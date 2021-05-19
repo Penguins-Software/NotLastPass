@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
+import AuthService from "../services/auth.service";
 
 export default class Password extends Component {
   constructor(props) {
@@ -67,10 +68,14 @@ export default class Password extends Component {
   getPassword(id) {
     PasswordDataService.get(id)
       .then(response => {
-        this.setState({
-          currentPassword: response.data
-        });
-        console.log(response.data);
+        if(response.data.message == "Unauthorized!"){
+          AuthService.logout();
+        }
+        else{
+          this.setState({
+            currentPassword: response.data
+          });
+        }
       })
       .catch(e => {
         console.log(e);
@@ -79,25 +84,33 @@ export default class Password extends Component {
 
   updatePassword() {
     PasswordDataService.update(
-      this.state.currentPassword.id,
+      this.state.currentPassword._id,
       this.state.currentPassword
     )
       .then(response => {
-        console.log(response.data);
-        this.setState({
-          message: "The password was updated successfully!"
-        });
+        if(response.data.message == "Unauthorized!"){
+          AuthService.logout();
+        }
+        else{
+          this.setState({
+            message: "The password was updated successfully!"
+          });
+        }
       })
       .catch(e => {
         console.log(e);
       });
   }
 
-  deletePassword() {    
-    PasswordDataService.delete(this.state.currentPassword.id)
+  deletePassword() {
+    PasswordDataService.delete(this.state.currentPassword._id)
       .then(response => {
-        console.log(response.data);
-        this.props.history.push('/passwords')
+        if(response.data.message == "Unauthorized!"){
+          AuthService.logout();
+        }
+        else{
+          this.props.history.push('/passwords')
+        }
       })
       .catch(e => {
         console.log(e);

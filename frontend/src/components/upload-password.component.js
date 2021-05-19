@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
 import Papa from "papaparse";
-import Password from "./password.component";
 
 export default class UploadPassword extends Component {
     constructor(props) {
@@ -43,7 +42,6 @@ export default class UploadPassword extends Component {
       }
 
       updateData(results){
-        console.log(results.data);
         results.data.forEach(function (element, index) {
             var tempPassword = {
                 website: element.url,
