@@ -47,9 +47,9 @@ class App extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a href="/passwords" className="navbar-brand">
+          <Link to={"/passwords"} className="navbar-brand">
             Penguins
-          </a>
+          </Link>
           {currentUser ? (
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
