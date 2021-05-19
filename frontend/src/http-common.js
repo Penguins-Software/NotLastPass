@@ -6,7 +6,7 @@ const user = AuthService.getCurrentUser();
 
 export default axios.create(
   {
-  baseURL: "http://localhost:8081/api",
+  baseURL: "http://localhost:8081/",
   headers: {
     "Content-type": "application/json",
     "x-access-token": user?.accessToken,

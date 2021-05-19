@@ -32,5 +32,5 @@ module.exports = app => {
     router.delete("/", [authJwt.verifyToken], passwords.deleteAll);
   
     //API Path
-    app.use('/api/passwords', router);
+    app.use('/passwords', router);
   };
