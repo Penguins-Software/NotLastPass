@@ -3,6 +3,7 @@ import PasswordDataService from "../services/password.service";
 import { Link } from "react-router-dom";
 
 import AuthService from "../services/auth.service";
+import CryptoService from "../services/crypto.service";
 
 export default class PasswordsList extends Component {
   constructor(props) {
@@ -37,14 +38,27 @@ export default class PasswordsList extends Component {
   }
 
   retrievePasswords() {
-    PasswordDataService.getAll()
+    PasswordDataService.getAllEnc()
       .then(response => {
         if(response.data.message == "Unauthorized!"){
           AuthService.logout();
         }
         else{
+
+          console.log("response.data: " + JSON.stringify(response.data));
+
+          const tempPasswordList = []
+          response.data.forEach(passEncObject => {
+            const password = CryptoService.decryptData(passEncObject.encrypted);
+            password["_id"] = passEncObject._id;
+
+            console.log("Pass Decry: " + JSON.stringify(password));
+
+            tempPasswordList.push(password);
+          });
+
           this.setState({
-            passwords: response.data
+            passwords: tempPasswordList
           });
         }
       })
@@ -62,7 +76,9 @@ export default class PasswordsList extends Component {
   }
 
   setActivePassword(password, index) {
-    console.log(JSON.stringify(password));
+    const enPassword = CryptoService.encryptData(password);
+    console.log("Encrypt: " + enPassword);
+    console.log("Decrypt: " + JSON.stringify(CryptoService.decryptData(enPassword)));
     this.setState({
       currentPassword: password,
       currentIndex: index
@@ -70,7 +86,7 @@ export default class PasswordsList extends Component {
   }
 
   removeAllPasswords() {
-    PasswordDataService.deleteAll()
+    PasswordDataService.deleteAllEnc()
       .then(response => {
         if(response.data.message == "Unauthorized!"){
           AuthService.logout();

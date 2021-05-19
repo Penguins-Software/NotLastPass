@@ -48,7 +48,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/passwords"} className="navbar-brand">
-            Penguins
+            Not LastPass
           </Link>
           {currentUser ? (
           <div className="navbar-nav mr-auto">
