@@ -160,7 +160,7 @@ export default class Password extends Component {
               <div className="form-group">
                 <label htmlFor="password">password</label>
                 <input
-                  type="password"//change to text to view password
+                  type="text"//change to text to view password
                   className="form-control"
                   id="password"
                   value={currentPassword.password}
@@ -170,7 +170,7 @@ export default class Password extends Component {
             </form>
 
             <button
-              className="badge badge-danger mr-2"
+              className="btn btn-outline-primary"
               onClick={this.deletePassword}
             >
               Delete
@@ -178,7 +178,7 @@ export default class Password extends Component {
 
             <button
               type="submit"
-              className="badge badge-success"
+              className="btn btn-outline-primary"
               onClick={this.updatePassword}
             >
               Update

@@ -197,7 +197,7 @@ export default class PasswordsList extends Component {
 
               <Link
                 to={"/passwords/" + currentPassword._id}
-                className="badge badge-warning"
+                className="btn btn-outline-primary"
               >
                 Edit
               </Link>
