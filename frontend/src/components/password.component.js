@@ -75,7 +75,6 @@ export default class Password extends Component {
         }
         else{
           const password = CryptoService.decryptData(response.data.encrypted);
-          console.log("Pass component : " + JSON.stringify(password));
           password["_id"] = response.data._id;
           this.setState({
             currentPassword: password

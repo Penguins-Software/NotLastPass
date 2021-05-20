@@ -12,7 +12,6 @@ class CryptoService {
     {
         // Decrypt
         const currentUser = AuthService.getCurrentUser();
-        console.log("Crypto cipher: " + ciphertext);
         const passwordBytes = CryptoJS.AES.decrypt(ciphertext, currentUser.id);
         return JSON.parse(passwordBytes.toString(CryptoJS.enc.Utf8));
     }
