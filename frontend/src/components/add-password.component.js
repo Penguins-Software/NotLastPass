@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
+import CryptoService from "../services/crypto.service";
 
 export default class AddPassword extends Component {
   constructor(props) {
@@ -45,13 +46,14 @@ export default class AddPassword extends Component {
       password: this.state.password
     };
 
-    PasswordDataService.create(JSON.stringify(data)).then(
+    const encData = CryptoService.encryptData(data);
+
+    PasswordDataService.createEnc({encryptedString: encData}).then(
       this.setState({
         submitted: true
       })).catch(e => {
       console.log(e);
     });
-    
   }
 
   newPassword() {

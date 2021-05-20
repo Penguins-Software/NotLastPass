@@ -48,7 +48,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/passwords"} className="navbar-brand">
-            Penguins
+            Not LastPass
           </Link>
           {currentUser ? (
           <div className="navbar-nav mr-auto">
@@ -77,7 +77,7 @@ class App extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={this.logOut}>
+                <a href="/" className="nav-link" onClick={this.logOut}>
                   LogOut
                 </a>
               </li>
