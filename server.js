@@ -46,5 +46,3 @@ const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-//https://bezkoder.com/react-node-express-mongodb-mern-stack/
