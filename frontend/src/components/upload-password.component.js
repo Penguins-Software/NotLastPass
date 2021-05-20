@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
 import Papa from "papaparse";
+import CryptoService from "../services/crypto.service";
 
 export default class UploadPassword extends Component {
     constructor(props) {
@@ -49,7 +50,9 @@ export default class UploadPassword extends Component {
                 password: element.password
             };
 
-            PasswordDataService.create(JSON.stringify(tempPassword)).catch(e => {
+            const encData = CryptoService.encryptData(tempPassword);
+
+            PasswordDataService.createEnc({encrypted: encData}).catch(e => {
                 console.log(e);
               });
         });

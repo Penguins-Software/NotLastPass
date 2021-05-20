@@ -51,7 +51,7 @@ exports.create = (req, res) => {
 // Create and Save a new Password
 exports.createEnc = (req, res) => {
   // Validate request
-  if (!req.body.encryptedString) {
+  if (!req.body.encrypted) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
@@ -61,7 +61,7 @@ exports.createEnc = (req, res) => {
 
   // Save Password in the database
   Model.create({
-    encrypted: req.body.encryptedString
+    encrypted: req.body.encrypted
   }).then(()=>{
     res.status(201).send({ message: "Success" });
   })

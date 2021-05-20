@@ -48,7 +48,7 @@ export default class AddPassword extends Component {
 
     const encData = CryptoService.encryptData(data);
 
-    PasswordDataService.createEnc({encryptedString: encData}).then(
+    PasswordDataService.createEnc({encrypted: encData}).then(
       this.setState({
         submitted: true
       })).catch(e => {
