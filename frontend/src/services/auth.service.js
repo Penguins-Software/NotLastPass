@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8081/auth/";
+const API_URL = "http://localhost:8081/auth/";//Change this (or create env varible) if backend is running on a different host
 
 class AuthService {
   login(username, password) {
@@ -20,6 +20,7 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+    //Possible have redirect here instead of everywhere logout() is called.
   }
 
   register(username, email, password) {

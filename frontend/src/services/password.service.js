@@ -1,5 +1,6 @@
 import http from "../http-common";
 
+//Base_url is in http-common.js file.
 class PasswordDataService {
   getAll() {
     return http.get("/passwords");

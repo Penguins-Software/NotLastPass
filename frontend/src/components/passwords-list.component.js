@@ -44,16 +44,10 @@ export default class PasswordsList extends Component {
           AuthService.logout();
         }
         else{
-
-          console.log("response.data: " + JSON.stringify(response.data));
-
           const tempPasswordList = []
           response.data.forEach(passEncObject => {
             const password = CryptoService.decryptData(passEncObject.encrypted);
             password["_id"] = passEncObject._id;
-
-            console.log("Pass Decry: " + JSON.stringify(password));
-
             tempPasswordList.push(password);
           });
 
@@ -76,15 +70,13 @@ export default class PasswordsList extends Component {
   }
 
   setActivePassword(password, index) {
-    const enPassword = CryptoService.encryptData(password);
-    console.log("Encrypt: " + enPassword);
-    console.log("Decrypt: " + JSON.stringify(CryptoService.decryptData(enPassword)));
     this.setState({
       currentPassword: password,
       currentIndex: index
     });
   }
 
+  //Currently not used
   removeAllPasswords() {
     PasswordDataService.deleteAllEnc()
       .then(response => {
