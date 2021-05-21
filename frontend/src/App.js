@@ -3,7 +3,6 @@ import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -21,9 +20,7 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
-      showAdminBoard: false,
-      currentUser: undefined,
+      currentUser: undefined
     };
   }
 
@@ -48,7 +45,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/passwords"} className="navbar-brand">
-            Not LastPass
+            Password Manager
           </Link>
           {currentUser ? (
           <div className="navbar-nav mr-auto">

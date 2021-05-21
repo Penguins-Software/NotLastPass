@@ -76,6 +76,7 @@ export default class PasswordsList extends Component {
     });
   }
 
+  //Currently not used
   removeAllPasswords() {
     PasswordDataService.deleteAllEnc()
       .then(response => {

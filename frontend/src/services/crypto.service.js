@@ -15,7 +15,6 @@ class CryptoService {
         const passwordBytes = CryptoJS.AES.decrypt(ciphertext, currentUser.id);
         return JSON.parse(passwordBytes.toString(CryptoJS.enc.Utf8));
     }
-
 }
 
 export default new CryptoService();

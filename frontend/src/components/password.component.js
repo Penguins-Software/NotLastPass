@@ -159,7 +159,7 @@ export default class Password extends Component {
               <div className="form-group">
                 <label htmlFor="password">password</label>
                 <input
-                  type="text"//change to text to view password
+                  type="text"
                   className="form-control"
                   id="password"
                   value={currentPassword.password}
