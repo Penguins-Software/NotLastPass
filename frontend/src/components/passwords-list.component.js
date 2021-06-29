@@ -97,20 +97,22 @@ export default class PasswordsList extends Component {
       currentIndex: -1
     });
 
-    PasswordDataService.findByWebsite(this.state.searchWebsite)
-      .then(response => {
-        if(response.data.message == "Unauthorized!"){
-          AuthService.logout();
-        }
-        else{
-          this.setState({
-            passwords: response.data
-          });
-        }
-      })
-      .catch(e => {
-        console.log(e);
+    //if search text is empty, refresh the list.
+    if(this.state.searchWebsite == '' || this.state.searchWebsite == null){
+      this.refreshList()
+    }
+    else{
+      //filter data where website contains the searchWebsite string
+      const filteredData = this.state.passwords.filter((data) => {
+        return data.website.search(this.state.searchWebsite) != -1;
+      }); 
+
+      //Set filteredData as the main passwords list.
+      this.setState({
+        passwords:filteredData
       });
+    }
+
   }
 
   render() {
