@@ -12,12 +12,14 @@ export default class AddPassword extends Component {
     this.savePassword = this.savePassword.bind(this);
     this.newPassword = this.newPassword.bind(this);
     this.generatePassword = this.generatePassword.bind(this);
+    this.onChangePasswordLength = this.onChangePasswordLength.bind(this);
 
     this.state = {
       id: null,
       website: "",
       username: "",
       password: "",
+      passwordLength: 10,
       submitted: false
     };
   }
@@ -39,10 +41,16 @@ export default class AddPassword extends Component {
       password: e.target.value
     });
   }
+  onChangePasswordLength(e){
+      const passwordLength = e.target.value;
+  
+      this.setState({
+        passwordLength: passwordLength
+      });
+  }
 
   generatePassword(){
-    const newPassword = CryptoService.generatePassword(10);
-    console.log('newPassword: '+ newPassword)
+    const newPassword = CryptoService.generatePassword(this.state.passwordLength);
     this.setState({
       password: newPassword
     });
@@ -77,6 +85,7 @@ export default class AddPassword extends Component {
   }
 
   render() {
+    const {passwordLength} = this.state;
     return (
       <div className="submit-form">
         {this.state.submitted ? (
@@ -125,15 +134,28 @@ export default class AddPassword extends Component {
                 onChange={this.onChangePassword}
                 name="password"
               />
-              <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={this.generatePassword}
-              >
-                Generate Password
-              </button>
-            </div>
+              <div>
+              <div className="row">
+                <div className="input-group-append col-md-8">
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={this.generatePassword}
+                  >
+                    Generate Password
+                  </button>
+                </div>
+                <div className="col-md-4">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="10"
+                    value={passwordLength}
+                    onChange={this.onChangePasswordLength}
+                  />
+                </div>
+              </div>
+              </div>
             </div>
 
             <button onClick={this.savePassword} className="btn btn-success">
