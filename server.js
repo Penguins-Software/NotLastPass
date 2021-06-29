@@ -24,12 +24,21 @@ db.mongoose
     useFindAndModify: false 
   })
   .then(() => {
-    console.log("Connected to the database!");
+    console.log("Connected to the "+db.url+" database!");
   })
   .catch(err => {
-    console.log("Cannot connect to the database!", err);
+    console.log("Cannot connect to the database "+db.url, err);
     process.exit();
   });
+
+// set up rate limiter: maximum of ten requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: 60*1000, // 1 minute
+  max: 10
+});
+
+app.use(limiter);
 
 //Looks in 
 const path = __dirname + '/frontend/build/';
@@ -46,5 +55,3 @@ const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-//https://bezkoder.com/react-node-express-mongodb-mern-stack/

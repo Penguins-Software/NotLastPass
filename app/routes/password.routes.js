@@ -12,24 +12,24 @@ module.exports = app => {
       );
       next();
     });
-  
-    // Create a new Password
-    router.post("/", [authJwt.verifyToken], passwords.create);
-  
+
+    //Create a new encrypted password
+    router.post("/Enc", [authJwt.verifyToken], passwords.createEnc);
+
     // Retrieve all Passwords
-    router.get("/", [authJwt.verifyToken], passwords.findAll);
-  
-    // Retrieve a single Password with id
-    router.get("/:id", [authJwt.verifyToken], passwords.findOne);
-  
-    // Update a Password with id
-    router.put("/:id", [authJwt.verifyToken], passwords.update);
-  
-    // Delete a Password with id
-    router.delete("/:id", [authJwt.verifyToken], passwords.delete);
-  
-    // Delete all passwords
-    router.delete("/", [authJwt.verifyToken], passwords.deleteAll);
+    router.get("/Enc", [authJwt.verifyToken], passwords.findAllEnc);
+
+    // Retrieve a single Encrypted Password with id
+    router.get("/Enc/:id", [authJwt.verifyToken], passwords.findOneEnc);
+
+    // Update a Encrypted Password with id
+    router.put("/Enc/:id", [authJwt.verifyToken], passwords.updateEnc);
+
+    // Delete a Encrypted Password with id
+    router.delete("/Enc/:id", [authJwt.verifyToken], passwords.deleteEnc);
+
+    // Delete all Encrypted passwords
+    router.delete("/Enc", [authJwt.verifyToken], passwords.deleteAllEnc);
   
     //API Path
     app.use('/passwords', router);

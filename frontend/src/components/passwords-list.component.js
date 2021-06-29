@@ -3,6 +3,7 @@ import PasswordDataService from "../services/password.service";
 import { Link } from "react-router-dom";
 
 import AuthService from "../services/auth.service";
+import CryptoService from "../services/crypto.service";
 
 export default class PasswordsList extends Component {
   constructor(props) {
@@ -37,14 +38,21 @@ export default class PasswordsList extends Component {
   }
 
   retrievePasswords() {
-    PasswordDataService.getAll()
+    PasswordDataService.getAllEnc()
       .then(response => {
         if(response.data.message == "Unauthorized!"){
           AuthService.logout();
         }
         else{
+          const tempPasswordList = []
+          response.data.forEach(passEncObject => {
+            const password = CryptoService.decryptData(passEncObject.encrypted);
+            password["_id"] = passEncObject._id;
+            tempPasswordList.push(password);
+          });
+
           this.setState({
-            passwords: response.data
+            passwords: tempPasswordList
           });
         }
       })
@@ -62,15 +70,15 @@ export default class PasswordsList extends Component {
   }
 
   setActivePassword(password, index) {
-    console.log(JSON.stringify(password));
     this.setState({
       currentPassword: password,
       currentIndex: index
     });
   }
 
+  //Currently not used
   removeAllPasswords() {
-    PasswordDataService.deleteAll()
+    PasswordDataService.deleteAllEnc()
       .then(response => {
         if(response.data.message == "Unauthorized!"){
           AuthService.logout();
@@ -89,20 +97,22 @@ export default class PasswordsList extends Component {
       currentIndex: -1
     });
 
-    PasswordDataService.findByWebsite(this.state.searchWebsite)
-      .then(response => {
-        if(response.data.message == "Unauthorized!"){
-          AuthService.logout();
-        }
-        else{
-          this.setState({
-            passwords: response.data
-          });
-        }
-      })
-      .catch(e => {
-        console.log(e);
+    //if search text is empty, refresh the list.
+    if(this.state.searchWebsite == '' || this.state.searchWebsite == null){
+      this.refreshList()
+    }
+    else{
+      //filter data where website contains the searchWebsite string
+      const filteredData = this.state.passwords.filter((data) => {
+        return data.website.search(this.state.searchWebsite) != -1;
+      }); 
+
+      //Set filteredData as the main passwords list.
+      this.setState({
+        passwords:filteredData
       });
+    }
+
   }
 
   render() {
@@ -181,7 +191,7 @@ export default class PasswordsList extends Component {
 
               <Link
                 to={"/passwords/" + currentPassword._id}
-                className="badge badge-warning"
+                className="btn btn-outline-primary"
               >
                 Edit
               </Link>
