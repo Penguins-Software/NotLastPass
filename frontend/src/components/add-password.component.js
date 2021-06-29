@@ -11,6 +11,7 @@ export default class AddPassword extends Component {
 
     this.savePassword = this.savePassword.bind(this);
     this.newPassword = this.newPassword.bind(this);
+    this.generatePassword = this.generatePassword.bind(this);
 
     this.state = {
       id: null,
@@ -36,6 +37,14 @@ export default class AddPassword extends Component {
   onChangePassword(e) {
     this.setState({
       password: e.target.value
+    });
+  }
+
+  generatePassword(){
+    const newPassword = CryptoService.generatePassword(10);
+    console.log('newPassword: '+ newPassword)
+    this.setState({
+      password: newPassword
     });
   }
 
@@ -116,6 +125,15 @@ export default class AddPassword extends Component {
                 onChange={this.onChangePassword}
                 name="password"
               />
+              <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.generatePassword}
+              >
+                Generate Password
+              </button>
+            </div>
             </div>
 
             <button onClick={this.savePassword} className="btn btn-success">
