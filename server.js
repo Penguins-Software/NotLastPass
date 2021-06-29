@@ -31,6 +31,15 @@ db.mongoose
     process.exit();
   });
 
+// set up rate limiter: maximum of ten requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: 60*1000, // 1 minute
+  max: 10
+});
+
+app.use(limiter);
+
 //Looks in 
 const path = __dirname + '/frontend/build/';
 app.use(express.static(path));

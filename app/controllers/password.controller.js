@@ -71,13 +71,20 @@ exports.updateEnc = (req, res) => {
         message: "Data to update can not be empty!"
       });
     }
+    const passwordUpdate = req.body;
+
+    if(!passwordUpdate.encrypted){
+      return res.status(400).send({
+        message: "Data to update can not be empty!"
+      });
+    }
   
     const id = req.params.id;
 
     const loginUser = req.headers["username"];
     const Model = mongoose.model(loginUser, encrSchema);
   
-    Model.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    Model.findByIdAndUpdate(id, passwordUpdate, { useFindAndModify: false })
       .then(data => {
         if (!data) {
           res.status(404).send({
