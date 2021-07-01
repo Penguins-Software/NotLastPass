@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
 import { Link } from "react-router-dom";
 
+import CardItem from './card.component';
+import {CardDeck} from 'react-bootstrap';
+
 import AuthService from "../services/auth.service";
 import CryptoService from "../services/crypto.service";
 
@@ -118,6 +121,18 @@ export default class PasswordsList extends Component {
   render() {
     const { searchWebsite, passwords, currentPassword, currentIndex } = this.state;
 
+    console.log(JSON.stringify(passwords))
+    let cardList = passwords.map((card, index) => (
+      <div className="col-md-3">
+            <CardItem
+              website={card.website}
+              username={card.username}
+              password={card.password} 
+            />
+      </div>
+      ) 
+    );
+
     return (
       <div className="list row">
         <div className="col-md-8">
@@ -143,7 +158,11 @@ export default class PasswordsList extends Component {
         <div className="col-md-6">
           <h4>Passwords List</h4>
 
-          <ul className="list-group">
+          <CardDeck>
+                {cardList}
+          </CardDeck>
+
+          {/* <ul className="list-group">
             {passwords &&
               passwords.map((password, index) => (
                 <li
@@ -156,8 +175,9 @@ export default class PasswordsList extends Component {
                 >
                   {password.website.length < this.theMeaningOfLive-5 ? password.website : password.website.substr(0,this.theMeaningOfLive-5)+"..."}
                 </li>
-              ))}
-          </ul>
+              ))
+            }
+          </ul> */}
 
           {/* <button
             className="m-3 btn btn-sm btn-danger"

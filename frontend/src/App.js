@@ -14,6 +14,8 @@ import Password from "./components/password.component";
 import PasswordsList from "./components/passwords-list.component";
 import UploadPassword from "./components/upload-password.component";
 
+import Test from './components/test.component';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -105,6 +107,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/test" component={Test} />
           </Switch>
         </div>
       </div>
