@@ -121,25 +121,38 @@ export default class PasswordsList extends Component {
   render() {
     const { searchWebsite, passwords, currentPassword, currentIndex } = this.state;
 
-    console.log(JSON.stringify(passwords))
-    let cardList = passwords.map((card, index) => (
-      <div className="col-md-3">
+    const cards = [{_id: 0, website: 'webside.com', username:'admin', password:'lame'},
+                    {_id: 1, website: 'webside2.com', username:'admin2', password:'password'},
+                    {_id: 2, website: 'webside3.com', username:'admin3', password:'password3'},
+                    {_id: 3, website: 'webside4.com', username:'admin4', password:'password4'},
+                    {_id: 4, website: 'webside5.com', username:'admin5', password:'password5'},
+                    {_id: 5, website: 'webside6.com', username:'admin6', password:'password6'},
+                    {_id: 6, website: 'webside7.com', username:'admin7', password:'password7'},
+                    {_id: 7, website: 'webside8.com', username:'admin8', password:'password8'},
+                    {_id: 8, website: 'webside9.com', username:'admin9', password:'password9'}];
+
+    let cardList = cards.map((card) => (
+    <div className="col-mb-3" style={{flex:1}}>
+            <Link
+                to={"/passwords/" + card._id}
+              >
             <CardItem
               website={card.website}
               username={card.username}
-              password={card.password} 
+              password={card.password}
             />
+            </Link>
       </div>
       ) 
     );
 
     return (
       <div className="list row">
-        <div className="col-md-8">
-          <div className="input-group mb-3">
+        <div className="col-md-12">
+          <div className="input-group">
             <input
               type="text"
-              className="form-control"
+              className="form-control col-mb-4"
               placeholder="Search by website"
               value={searchWebsite}
               onChange={this.onChangeSearchWebsite}
@@ -155,74 +168,14 @@ export default class PasswordsList extends Component {
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col mb-12">
           <h4>Passwords List</h4>
 
           <CardDeck>
                 {cardList}
           </CardDeck>
-
-          {/* <ul className="list-group">
-            {passwords &&
-              passwords.map((password, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                  onClick={() => this.setActivePassword(password, index)}
-                  key={index}
-                >
-                  {password.website.length < this.theMeaningOfLive-5 ? password.website : password.website.substr(0,this.theMeaningOfLive-5)+"..."}
-                </li>
-              ))
-            }
-          </ul> */}
-
-          {/* <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllPasswords}
-          >
-            Remove All
-          </button> */}
         </div>
-        <div className="col-md-6">
-          {currentPassword ? (
-            <div>
-              <h4>Password</h4>
-              <div>
-                <label>
-                  <strong>Website:</strong>
-                </label>{" "}
-                {currentPassword.website}
-              </div>
-              <div>
-                <label>
-                  <strong>Username:</strong>
-                </label>{" "}
-                {currentPassword.username}
-              </div>
-              <div>
-                <label>
-                  <strong>Password:</strong>
-                </label>{" "}
-                {currentPassword.password}
-              </div>
-
-              <Link
-                to={"/passwords/" + currentPassword._id}
-                className="btn btn-outline-primary"
-              >
-                Edit
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a Password...</p>
-            </div>
-          )}
-        </div>
+        
       </div>
     );
   }

@@ -6,7 +6,7 @@ export default class CardItem extends Component {
 
     render(){
         return(
-            <Card style={{ width: '18rem' }}>
+            <Card>
             <Card.Body>
                 <Card.Title>{this.props.website}</Card.Title>
                 <Card.Text>
