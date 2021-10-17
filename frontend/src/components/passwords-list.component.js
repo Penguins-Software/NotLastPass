@@ -121,35 +121,25 @@ export default class PasswordsList extends Component {
   render() {
     const { searchWebsite, passwords, currentPassword, currentIndex } = this.state;
 
-    const cards = [{_id: 0, website: 'webside.com', username:'admin', password:'lame'},
-                    {_id: 1, website: 'webside2.com', username:'admin2', password:'password'},
-                    {_id: 2, website: 'webside3.com', username:'admin3', password:'password3'},
-                    {_id: 3, website: 'webside4.com', username:'admin4', password:'password4'},
-                    {_id: 4, website: 'webside5.com', username:'admin5', password:'password5'},
-                    {_id: 5, website: 'webside6.com', username:'admin6', password:'password6'},
-                    {_id: 6, website: 'webside7.com', username:'admin7', password:'password7'},
-                    {_id: 7, website: 'webside8.com', username:'admin8', password:'password8'},
-                    {_id: 8, website: 'webside9.com', username:'admin9', password:'password9'}];
-
-    let cardList = cards.map((card) => (
-    <div className="col-mb-3" style={{flex:1}}>
-            <Link
-                to={"/passwords/" + card._id}
-              >
-            <CardItem
-              website={card.website}
-              username={card.username}
-              password={card.password}
-            />
-            </Link>
-      </div>
+    let cardList = passwords.map((card) => (
+        <div>
+                <Link
+                    to={"/passwords/" + card._id}
+                  >
+                <CardItem
+                  website={card.website}
+                  username={card.username}
+                  password={card.password}
+                />
+                </Link>
+          </div>
       ) 
     );
 
     return (
-      <div className="list row">
-        <div className="col-md-12">
-          <div className="input-group">
+      <div class="container">
+        <div className="row">
+          <div className=" col-md-12 input-group">
             <input
               type="text"
               className="form-control col-mb-4"
@@ -168,9 +158,11 @@ export default class PasswordsList extends Component {
             </div>
           </div>
         </div>
-        <div className="col mb-12">
+        <div className="row">
           <h4>Passwords List</h4>
+        </div>
 
+        <div className="row">
           <CardDeck>
                 {cardList}
           </CardDeck>
