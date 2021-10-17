@@ -35,7 +35,7 @@ db.mongoose
 var RateLimit = require('express-rate-limit');
 var limiter = new RateLimit({
   windowMs: 60*1000, // 1 minute
-  max: 10
+  max: 100
 });
 
 app.use(limiter);
