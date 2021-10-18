@@ -3,7 +3,7 @@ version: '3'
 services:
     nodejs:
         build: .
-        image: nodejs
+        image: node:12.18.3
         container_name: nodejs
         restart: unless-stopped
         environment:
