@@ -22,7 +22,7 @@ env:
   GKE_CLUSTER: not-lastpass-dev    # TODO: update to cluster name
   GKE_ZONE: us-central1-c   # TODO: update to cluster zone
   DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
-  IMAGE: static-site
+  IMAGE: ${{ secrets.GKE_PROJECT }}
 
 jobs:
   setup-build-publish-deploy:
