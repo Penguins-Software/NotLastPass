@@ -2,10 +2,9 @@ version: '3'
 
 services:
     nodejs:
-        build:
-            build: .
-            image: smartsnake/nodejs
-            container_name: nodejs
+        build: 
+            context: .
+            dockerfile: Dockerfile
         restart: unless-stopped
         environment:
             PORT: 8081
