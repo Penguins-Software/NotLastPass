@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PasswordDataService from "../services/password.service";
 import { Link } from "react-router-dom";
 
+import CardItem from './card.component';
+import {CardDeck} from 'react-bootstrap';
+
 import AuthService from "../services/auth.service";
 import CryptoService from "../services/crypto.service";
 
@@ -118,13 +121,28 @@ export default class PasswordsList extends Component {
   render() {
     const { searchWebsite, passwords, currentPassword, currentIndex } = this.state;
 
+    let cardList = passwords.map((card) => (
+        <div>
+                <Link
+                    to={"/passwords/" + card._id}
+                  >
+                <CardItem
+                  website={card.website}
+                  username={card.username}
+                  password={card.password}
+                />
+                </Link>
+          </div>
+      ) 
+    );
+
     return (
-      <div className="list row">
-        <div className="col-md-8">
-          <div className="input-group mb-3">
+      <div class="container">
+        <div className="row">
+          <div className=" col-md-12 input-group">
             <input
               type="text"
-              className="form-control"
+              className="form-control col-mb-4"
               placeholder="Search by website"
               value={searchWebsite}
               onChange={this.onChangeSearchWebsite}
@@ -140,69 +158,16 @@ export default class PasswordsList extends Component {
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="row">
           <h4>Passwords List</h4>
-
-          <ul className="list-group">
-            {passwords &&
-              passwords.map((password, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                  onClick={() => this.setActivePassword(password, index)}
-                  key={index}
-                >
-                  {password.website.length < this.theMeaningOfLive-5 ? password.website : password.website.substr(0,this.theMeaningOfLive-5)+"..."}
-                </li>
-              ))}
-          </ul>
-
-          {/* <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllPasswords}
-          >
-            Remove All
-          </button> */}
         </div>
-        <div className="col-md-6">
-          {currentPassword ? (
-            <div>
-              <h4>Password</h4>
-              <div>
-                <label>
-                  <strong>Website:</strong>
-                </label>{" "}
-                {currentPassword.website}
-              </div>
-              <div>
-                <label>
-                  <strong>Username:</strong>
-                </label>{" "}
-                {currentPassword.username}
-              </div>
-              <div>
-                <label>
-                  <strong>Password:</strong>
-                </label>{" "}
-                {currentPassword.password}
-              </div>
 
-              <Link
-                to={"/passwords/" + currentPassword._id}
-                className="btn btn-outline-primary"
-              >
-                Edit
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a Password...</p>
-            </div>
-          )}
+        <div className="row">
+          <CardDeck>
+                {cardList}
+          </CardDeck>
         </div>
+        
       </div>
     );
   }
