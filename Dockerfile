@@ -20,5 +20,5 @@ RUN npm install frontend/
 
 
 
-EXPOSE 8081
+EXPOSE 80
 CMD [ "npm", "run", "start" ]
